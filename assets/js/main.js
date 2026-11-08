@@ -1,0 +1,181 @@
+/* OPQ — comportamenti del sito: menu, copertina video, agenda e archivio */
+(function () {
+  "use strict";
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- Menu su telefono ---------- */
+  var bottoneMenu = $(".apri-menu"), nav = $("#nav");
+  if (bottoneMenu && nav) {
+    bottoneMenu.addEventListener("click", function () {
+      var aperto = nav.classList.toggle("aperto");
+      bottoneMenu.setAttribute("aria-expanded", aperto ? "true" : "false");
+      bottoneMenu.textContent = aperto ? "Chiudi" : "Menu";
+    });
+  }
+
+  /* ---------- Testata trasparente sulla copertina ---------- */
+  var testata = $(".testata"), copertina = $(".copertina");
+  if (testata && copertina) {
+    var aggiornaTestata = function () {
+      testata.classList.toggle("piena", window.scrollY > copertina.offsetHeight - 80);
+    };
+    window.addEventListener("scroll", aggiornaTestata, { passive: true });
+    aggiornaTestata();
+  }
+
+  /* ---------- Video di copertina: si alternano in dissolvenza ---------- */
+  var video = $$(".copertina video");
+  var pausa = $(".pausa-video");
+  var riduci = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var corrente = 0, inPausa = riduci;
+  function suona(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  if (video.length) {
+    video[0].classList.add("attivo");
+    video.forEach(function (v, i) {
+      v.addEventListener("ended", function () {
+        if (video.length < 2) { v.currentTime = 0; if (!inPausa) suona(v); return; }
+        var prossimo = video[(i + 1) % video.length];
+        prossimo.currentTime = 0;
+        if (!inPausa) suona(prossimo);
+        prossimo.classList.add("attivo"); v.classList.remove("attivo");
+        corrente = (i + 1) % video.length;
+      });
+    });
+    if (!inPausa) suona(video[0]);
+    var aggiornaPausa = function () { if (pausa) pausa.textContent = inPausa ? "▶ Riproduci" : "❚❚ Pausa"; };
+    aggiornaPausa();
+    if (pausa) pausa.addEventListener("click", function () {
+      inPausa = !inPausa;
+      if (inPausa) video[corrente].pause(); else suona(video[corrente]);
+      aggiornaPausa();
+    });
+  }
+
+  /* ---------- Eventi ---------- */
+  var EVENTI = (window.EVENTI_OPQ || []).slice();
+  var oggi = new Date(); oggi.setHours(0, 0, 0, 0);
+  var MESI = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var MESI_BREVI = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var GIORNI = ["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+  function dataDi(e) { var p = e.data.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function lunga(e) { var d = dataDi(e); return GIORNI[d.getDay()] + " " + d.getDate() + " " + MESI[d.getMonth()] + " " + d.getFullYear() + (e.ora ? ", ore " + e.ora : ""); }
+  function breve(e) { var d = dataDi(e); return d.getDate() + "." + (d.getMonth() + 1) + "." + String(d.getFullYear()).slice(2); }
+  function esc(t) { return String(t || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  var futuri = EVENTI.filter(function (e) { return dataDi(e) >= oggi; }).sort(function (a, b) { return dataDi(a) - dataDi(b); });
+  var passati = EVENTI.filter(function (e) { return dataDi(e) < oggi; }).sort(function (a, b) { return dataDi(b) - dataDi(a); });
+  var registro = []; // eventi mostrati, per aprire la locandina
+
+  function idDi(e) { var i = registro.indexOf(e); if (i < 0) { registro.push(e); i = registro.length - 1; } return i; }
+
+  function rigaAgenda(e) {
+    var d = dataDi(e);
+    return '<li><button type="button" data-evento="' + idDi(e) + '" aria-label="' + esc(e.titolo + ", " + lunga(e)) + '">' +
+      '<span class="giorno">' + d.getDate() + '<small>' + MESI_BREVI[d.getMonth()] + " " + d.getFullYear() + '</small></span>' +
+      '<span class="titolo">' + esc(e.titolo) + (e.sottotitolo ? '<small>' + esc(e.sottotitolo) + '</small>' : '') + '</span>' +
+      '<span class="rassegna etichetta">' + esc(e.rassegna || etichettaTipo(e.tipo)) + '</span>' +
+      '<img src="' + esc(e.locandina) + '" alt="" loading="lazy">' +
+    '</button></li>';
+  }
+  function etichettaTipo(t) { return { musica: "Musica", incontri: "Incontro", feste: "Festa" }[t] || ""; }
+  function schedaLocandina(e) {
+    return '<li class="locandina"><button type="button" data-evento="' + idDi(e) + '">' +
+      '<img src="' + esc(e.locandina) + '" alt="Locandina: ' + esc(e.titolo) + '" loading="lazy">' +
+      '<span class="meta"><span class="etichetta">' + breve(e) + '</span><span class="etichetta grigio">' + esc(e.rassegna || etichettaTipo(e.tipo)) + '</span></span>' +
+      '<h3>' + esc(e.titolo) + '</h3>' +
+    '</button></li>';
+  }
+
+  $$("[data-prossimi]").forEach(function (box) {
+    if (!futuri.length) return;
+    box.innerHTML = '<ul class="agenda">' + futuri.map(rigaAgenda).join("") + '</ul>';
+  });
+  $$("[data-ultimi]").forEach(function (ul) {
+    ul.innerHTML = passati.slice(0, +ul.dataset.ultimi || 5).map(rigaAgenda).join("");
+  });
+
+  var archivio = $("[data-archivio]");
+  if (archivio) {
+    var conta = function (t) { return t === "tutti" ? passati.length : passati.filter(function (e) { return e.tipo === t; }).length; };
+    $$(".filtri button").forEach(function (b) { b.insertAdjacentHTML("beforeend", "<sup>" + conta(b.dataset.filtro) + "</sup>"); });
+    var mostra = function (t) {
+      var lista = t === "tutti" ? passati : passati.filter(function (e) { return e.tipo === t; });
+      archivio.innerHTML = lista.map(schedaLocandina).join("");
+    };
+    mostra("tutti");
+    $$(".filtri button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        $$(".filtri button").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+        b.setAttribute("aria-pressed", "true");
+        mostra(b.dataset.filtro);
+      });
+    });
+  }
+
+  /* Locandina a tutto schermo */
+  var dialogo = $("dialog.lightbox");
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-evento]");
+    if (!b || !dialogo) return;
+    var e = registro[+b.dataset.evento];
+    $("img", dialogo).src = e.locandina; $("img", dialogo).alt = "Locandina: " + e.titolo;
+    $(".l-data", dialogo).textContent = lunga(e);
+    $("h3", dialogo).textContent = e.titolo;
+    var info = [e.sottotitolo, e.rassegna ? "Rassegna " + e.rassegna : "", e.ingresso].filter(Boolean);
+    $(".l-info", dialogo).innerHTML = info.map(function (t) { return '<p class="riga-info">' + esc(t) + '</p>'; }).join("");
+    dialogo.showModal();
+  });
+  if (dialogo) {
+    $(".chiudi", dialogo).addEventListener("click", function () { dialogo.close(); });
+    dialogo.addEventListener("click", function (ev) { if (ev.target === dialogo) dialogo.close(); });
+  }
+
+  /* ---------- Schede della pagina eventi ---------- */
+  var schede = $$("[data-scheda]");
+  if (schede.length) {
+    var attiva = function (nome, aggiornaUrl) {
+      schede.forEach(function (b) {
+        var si = b.dataset.scheda === nome;
+        b.setAttribute("aria-selected", si ? "true" : "false");
+        b.tabIndex = si ? 0 : -1;
+        document.getElementById(b.dataset.scheda).hidden = !si;
+      });
+      if (aggiornaUrl && history.replaceState) history.replaceState(null, "", "#" + nome);
+    };
+    schede.forEach(function (b, i) {
+      if (b.dataset.scheda === "archivio") b.insertAdjacentHTML("beforeend", " <sup>" + passati.length + "</sup>");
+      if (b.dataset.scheda === "programma" && futuri.length) b.insertAdjacentHTML("beforeend", " <sup>" + futuri.length + "</sup>");
+      b.addEventListener("click", function () { attiva(b.dataset.scheda, true); });
+      b.addEventListener("keydown", function (ev) {
+        var d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        var n = schede[(i + d + schede.length) % schede.length]; n.focus(); attiva(n.dataset.scheda, true);
+      });
+    });
+    var richiesta = location.hash.replace("#", "");
+    var valide = schede.map(function (b) { return b.dataset.scheda; });
+    attiva(valide.indexOf(richiesta) >= 0 ? richiesta : (futuri.length ? "programma" : "archivio"), false);
+  }
+
+  /* ---------- Statuto: apri/chiudi tutti ---------- */
+  var apriTutti = $("[data-apri-tutti]");
+  if (apriTutti) {
+    apriTutti.addEventListener("click", function () {
+      var art = $$(".statuto details");
+      var apri = art.some(function (d) { return !d.open; });
+      art.forEach(function (d) { d.open = apri; });
+      apriTutti.textContent = apri ? "Chiudi tutti gli articoli" : "Apri tutti gli articoli";
+    });
+  }
+
+  /* Comparsa morbida */
+  if ("IntersectionObserver" in window) {
+    var oss = new IntersectionObserver(function (voci) {
+      voci.forEach(function (v) { if (v.isIntersecting) { v.target.classList.add("visibile"); oss.unobserve(v.target); } });
+    }, { rootMargin: "0px 0px -10% 0px" });
+    $$(".rivela").forEach(function (el) { oss.observe(el); });
+  } else { $$(".rivela").forEach(function (el) { el.classList.add("visibile"); }); }
+
+  $$("[data-anno]").forEach(function (n) { n.textContent = new Date().getFullYear(); });
+})();
