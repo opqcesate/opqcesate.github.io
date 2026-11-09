@@ -151,7 +151,7 @@
     });
     var richiesta = location.hash.replace("#", "");
     var valide = schede.map(function (b) { return b.dataset.scheda; });
-    attiva(valide.indexOf(richiesta) >= 0 ? richiesta : (futuri.length ? "programma" : "archivio"), false);
+    attiva(valide.indexOf(richiesta) >= 0 ? richiesta : "programma", false);
   }
 
   /* ---------- Statuto: apri/chiudi tutti ---------- */
