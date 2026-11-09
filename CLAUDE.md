@@ -19,11 +19,11 @@ in modo diretto e conciso.
   (con statuto completo trascritto), `contatti.html`, `area-soci.html`.
 - Testata e piè di pagina sono **ripetuti in ogni pagina**: una modifica al menu o al
   footer va fatta in tutte e sei.
-- `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 in fondo al file);
+- `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 in fondo al file);
   le ultime prevalgono.
 - `assets/js/eventi.js`: **elenco eventi**, l'unico posto da modificare per aggiungere un
   evento. Il sito decide da solo se è "in programma" o "archivio" in base alla data.
-- `assets/js/main.js`: menu mobile, testata trasparente sulla copertina, video,
+- `assets/js/main.js`: menu mobile, velo della testata (colore della fascia sottostante), video,
   agenda/archivio/filtri, schede della pagina eventi, locandina ingrandita, statuto.
 - `assets/js/area-soci.js`: area soci **dimostrativa** (accetta qualsiasi dato).
   Per renderla reale serve un elenco soci online e un accesso vero (es. Supabase con
@@ -33,7 +33,18 @@ in modo diretto e conciso.
 - Icone: `favicon.ico` (radice), `assets/logo/` (favicon.svg, icona-192/512, apple-touch-icon),
   anteprima social `assets/og-image.jpg` (1200×630), `site.webmanifest`.
 
+## Regola di impaginazione (vale per ogni nuovo blocco)
+- Margini esterni `--margine`, griglia a 12 colonne con spazio `--gutter`; le griglie annidate
+  usano lo stesso spazio.
+- Tre assi di allineamento: colonne 1, 5 e 9. Etichette sull'asse 1, contenuti sul 5, note sul 9.
+- Spazi verticali solo con `--spazio-sezione` e `--spazio-blocco`. Sotto i 900 px i terzi vanno
+  in colonna unica.
+
 ## Scelte grafiche già decise (non cambiarle senza chiedere)
+- Testata sovrapposta ai contenuti, con sfocatura e velo a sfumatura progressiva; sulla
+  copertina nessun velo, il video occupa tutto lo schermo.
+- Piè di pagina nero e compatto: logo piccolo, dove, contatti, sito, associazione.
+- Ogni pagina ha un colore che la copre tutta (classi `.pagina-*` sul `body`).
 - Font: **Inter** (strutturale: titoli di pagina 500 molto grandi e stretti, titoli di sezione
   in maiuscolo, menu, etichette, pulsanti) + **Instrument Serif** (carattere distintivo:
   nomi eventi e rassegne, frasi grandi, titoli dei contenuti, statuto).
@@ -45,8 +56,8 @@ in modo diretto e conciso.
 - Copertina home: due video a tutto schermo che si alternano, scuriti, **sempre in
   riproduzione, senza pulsante pausa e senza logo sovrapposto**.
 - Niente pulsante "A+", niente numerini/contatori in apice, niente numerazione delle sezioni.
-- L'affitto degli spazi resta discreto (sezione "Ospitare" in fondo a Lo spazio);
-  tariffe e condizioni si concordano privatamente.
+- Lo spazio è diviso in due parti: "Il racconto" e, in fondo, "Gli spazi che affittiamo"
+  (fondo sabbia). Tariffe e condizioni si concordano privatamente, mai prezzi sul sito.
 - Pagina eventi a schede: In programma / Archivio / Foto.
 - Leggibilità alta: molti soci sono anziani (testo base 18 px, contrasti forti).
 
