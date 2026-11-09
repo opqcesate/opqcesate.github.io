@@ -15,7 +15,7 @@
   --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --max: 1440px;
+  --max: none;
   --gutter: clamp(16px, 3.2vw, 48px);
   --testata: 4.25rem;
 }
