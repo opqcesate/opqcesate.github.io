@@ -420,3 +420,99 @@ a.valore:hover { color: var(--accento); }
 .statuto .testo-articolo, .statuto details[open] .testo-articolo { padding: 0 1rem 2rem 9rem; }
 .statuto details[open] summary { padding-left: 1rem; padding-right: 1rem; }
 @media (max-width: 640px) { .statuto .testo-articolo, .statuto details[open] .testo-articolo { padding-left: 1rem; } }
+
+/* =========================================================
+   v4 — Fondi pastello presi dalle locandine + tipografia
+   ispirata al Circolo Magnolia (grotesk 500, maiuscolo,
+   etichette piccole, parentesi nel menu), con Instrument Serif
+   come carattere distintivo per titoli dei contenuti.
+   ========================================================= */
+:root {
+  --rosa: #f8cdbc;     /* Ci dici la tua? (19 febbraio) */
+  --lilla: #d9cae7;    /* Ci dici la tua? (5 marzo) */
+  --azzurro: #bfd7e2;  /* Se vuoi la pace, prepara la pace */
+  --salvia: #c3dccb;   /* Giradischi */
+  --sabbia: #f2e0ad;   /* giallo delle locandine */
+}
+.fondo-rosa { background: var(--rosa); }
+.fondo-lilla { background: var(--lilla); }
+.fondo-azzurro { background: var(--azzurro); }
+.fondo-salvia { background: var(--salvia); }
+.fondo-sabbia { background: var(--sabbia); }
+[class*="fondo-"] { color: var(--nero); }
+.sezione[class*="fondo-"] { padding-top: clamp(3.5rem, 8vw, 7rem); }
+.sezione.segue { padding-top: 0; }
+.sezione + .sezione[class*="fondo-"]:not(.segue) { padding-top: clamp(3.5rem, 8vw, 7rem); }
+[class*="fondo-"] .grigio, [class*="fondo-"] .agenda .titolo small, [class*="fondo-"] .scheda-documento dt { color: rgba(18,17,16,.62); }
+[class*="fondo-"] .riga-titolo, [class*="fondo-"] .colonne-info > div, [class*="fondo-"] .passi li { border-color: var(--nero); }
+[class*="fondo-"] a:hover { color: var(--nero); text-decoration-thickness: 2px; }
+.fondo-lilla .grande-frase em, .fondo-sabbia .grande-frase em { color: inherit; }
+
+/* --- Tipografia strutturale: Inter 500 --- */
+h1, .intestazione h1 {
+  font-family: var(--sans); font-weight: 500; letter-spacing: -.055em; line-height: .88;
+  font-size: clamp(3.4rem, 10vw, 9.5rem);
+}
+.riga-titolo h2 {
+  font-family: var(--sans); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(1.5rem, 2.5vw, 2.3rem); letter-spacing: -.025em; line-height: 1;
+}
+.capitolo-testa h2 { font-family: var(--sans); font-weight: 500; text-transform: uppercase; font-size: clamp(1.5rem, 2.5vw, 2.3rem); letter-spacing: -.025em; line-height: 1; }
+.etichetta, .nav a, .link-freccia, .pulsante, figcaption .etichetta { font-family: var(--sans); font-weight: 500; letter-spacing: .01em; }
+.etichetta { font-size: .78rem; }
+.lead { font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.35; }
+body { line-height: 1.5; }
+
+/* Menu con parentesi quadre, come il Magnolia */
+.nav a { text-transform: uppercase; font-size: .86rem; padding: .3rem 0; }
+.nav a::before { content: "["; }
+.nav a::after { content: "]"; position: static; background: none; height: auto; transform: none; transition: none; }
+.nav a:hover::after, .nav a[aria-current="page"]::after { transform: none; }
+.nav a[aria-current="page"] { color: var(--accento); }
+.nav a:hover { color: var(--accento); }
+.nav a[href="area-soci.html"] { border: 0; border-radius: 0; padding: .3rem .5rem; background: var(--nero); color: var(--carta); }
+.nav a[href="area-soci.html"]::after { display: inline; }
+.nav a[href="area-soci.html"]:hover, .nav a[href="area-soci.html"][aria-current="page"] { background: var(--accento); color: #fff; border-color: transparent; }
+.con-copertina .testata:not(.piena) .nav a[href="area-soci.html"] { background: #fff; color: var(--nero); }
+.con-copertina .testata:not(.piena) .nav a:hover { color: #fff; opacity: .75; }
+@media (max-width: 820px) {
+  .nav a { font-family: var(--sans); font-weight: 500; font-size: 1.9rem; letter-spacing: -.03em; }
+  .nav a::before, .nav a::after { content: none; }
+  .nav a[href="area-soci.html"] { background: none; color: var(--nero); padding: .45rem 0; }
+}
+.apri-menu { border-radius: 0; text-transform: uppercase; font-weight: 500; font-size: .86rem; }
+
+/* Pulsanti squadrati */
+.pulsante { border-radius: 0; text-transform: uppercase; font-size: .86rem; min-height: 2.9rem; padding: .7rem 1.2rem; background: rgba(18,17,16,.07); border-color: transparent; }
+.pulsante:hover { background: var(--nero); color: var(--carta); border-color: var(--nero); }
+.pulsante--pieno { background: var(--nero); color: var(--carta); }
+.copertina .pulsante { background: rgba(255,255,255,.14); border-color: transparent; }
+.lightbox .chiudi { background: var(--nero); color: var(--carta); }
+.link-freccia { text-transform: uppercase; font-size: .86rem; border-bottom: 0; background: rgba(18,17,16,.07); padding: .55rem .8rem; }
+.link-freccia:hover { background: var(--nero); color: var(--carta) !important; text-decoration: none; }
+.pausa-video { border-radius: 0; }
+.indice-pagina a { border-radius: 0; text-transform: uppercase; font-size: .86rem; font-weight: 500; border-color: transparent; background: rgba(18,17,16,.08); }
+.indice-pagina a[href="#statuto"] { background: var(--nero); }
+
+/* Instrument Serif: il carattere distintivo per i contenuti */
+.agenda .titolo, .rassegne h3, .locandina h3, .ambiente h3, .statuto summary .titolo-art,
+.lista-attivita strong, .organi strong, .contatti-lista .valore, .avviso p, .grande-frase,
+.copertina-titolo, .blocco-spazio .testo h3, .tessera-nome, .passi h3, .scheda-documento dd { font-family: var(--serif); font-weight: 400; }
+.agenda .giorno { font-family: var(--sans); font-weight: 500; letter-spacing: -.04em; }
+.agenda .giorno small, .agenda .rassegna { font-weight: 500; }
+
+/* Schede eventi: fascia rosa che resta in alto */
+.schede-fascia { position: sticky; top: var(--testata); z-index: 10; }
+.schede { position: static; background: transparent; }
+.schede button { font-family: var(--sans); font-weight: 500; text-transform: uppercase; font-size: clamp(.95rem, 1.6vw, 1.25rem); letter-spacing: -.01em; color: rgba(18,17,16,.55); }
+.schede button[aria-selected="true"] { background: var(--nero); color: var(--carta); }
+.filtri button { font-family: var(--sans); font-weight: 500; text-transform: uppercase; font-size: .95rem; padding: .5rem .8rem; background: rgba(18,17,16,.06); color: var(--nero); }
+.filtri button[aria-pressed="true"] { background: var(--nero); color: var(--carta); text-decoration: none; }
+.filtri { gap: .4rem; }
+
+/* Card e input più squadrati, coerenti */
+.accesso input { font-family: var(--sans); }
+.avviso-demo { border-style: solid; background: var(--carta-2); border: 0; }
+.lista-attivita li { grid-template-columns: 1fr; }
+.ambiente-testa { justify-content: flex-start; }
+.sezione.pannello { padding-top: clamp(2rem, 4vw, 3rem); }
