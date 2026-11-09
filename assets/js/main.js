@@ -14,13 +14,21 @@
     });
   }
 
-  /* ---------- Testata trasparente sulla copertina ---------- */
+  /* ---------- Testata sovrapposta: il velo prende il colore della fascia sottostante ---------- */
   var testata = $(".testata"), copertina = $(".copertina");
-  if (testata && copertina) {
+  if (testata) {
+    var fasce = $$("main [class*='fondo-']");
     var aggiornaTestata = function () {
-      testata.classList.toggle("piena", window.scrollY > copertina.offsetHeight - 80);
+      if (copertina) testata.classList.toggle("piena", window.scrollY > copertina.offsetHeight - 80);
+      var y = testata.offsetHeight / 2, velo = "";
+      fasce.forEach(function (f) {
+        var r = f.getBoundingClientRect();
+        if (r.top <= y && r.bottom > y) velo = getComputedStyle(f).backgroundColor;
+      });
+      if (velo) testata.style.setProperty("--velo", velo); else testata.style.removeProperty("--velo");
     };
     window.addEventListener("scroll", aggiornaTestata, { passive: true });
+    window.addEventListener("resize", aggiornaTestata);
     aggiornaTestata();
   }
 
