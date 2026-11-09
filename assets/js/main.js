@@ -24,31 +24,22 @@
     aggiornaTestata();
   }
 
-  /* ---------- Video di copertina: si alternano in dissolvenza ---------- */
+  /* ---------- Video di copertina: sempre in riproduzione, si alternano in dissolvenza ---------- */
   var video = $$(".copertina video");
-  var pausa = $(".pausa-video");
-  var riduci = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var corrente = 0, inPausa = riduci;
-  function suona(v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  function suona(v) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
   if (video.length) {
     video[0].classList.add("attivo");
     video.forEach(function (v, i) {
       v.addEventListener("ended", function () {
-        if (video.length < 2) { v.currentTime = 0; if (!inPausa) suona(v); return; }
         var prossimo = video[(i + 1) % video.length];
-        prossimo.currentTime = 0;
-        if (!inPausa) suona(prossimo);
-        prossimo.classList.add("attivo"); v.classList.remove("attivo");
-        corrente = (i + 1) % video.length;
+        prossimo.currentTime = 0; suona(prossimo);
+        if (prossimo !== v) { prossimo.classList.add("attivo"); v.classList.remove("attivo"); }
       });
     });
-    if (!inPausa) suona(video[0]);
-    var aggiornaPausa = function () { if (pausa) pausa.textContent = inPausa ? "▶ Riproduci" : "❚❚ Pausa"; };
-    aggiornaPausa();
-    if (pausa) pausa.addEventListener("click", function () {
-      inPausa = !inPausa;
-      if (inPausa) video[corrente].pause(); else suona(video[corrente]);
-      aggiornaPausa();
+    suona(video[0]);
+    // se il browser mette in pausa il video (es. scheda in background), riparte al ritorno
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) video.forEach(function (v) { if (v.classList.contains("attivo")) suona(v); });
     });
   }
 
@@ -98,7 +89,6 @@
   var archivio = $("[data-archivio]");
   if (archivio) {
     var conta = function (t) { return t === "tutti" ? passati.length : passati.filter(function (e) { return e.tipo === t; }).length; };
-    $$(".filtri button").forEach(function (b) { b.insertAdjacentHTML("beforeend", "<sup>" + conta(b.dataset.filtro) + "</sup>"); });
     var mostra = function (t) {
       var lista = t === "tutti" ? passati : passati.filter(function (e) { return e.tipo === t; });
       archivio.innerHTML = lista.map(schedaLocandina).join("");
@@ -144,8 +134,6 @@
       if (aggiornaUrl && history.replaceState) history.replaceState(null, "", "#" + nome);
     };
     schede.forEach(function (b, i) {
-      if (b.dataset.scheda === "archivio") b.insertAdjacentHTML("beforeend", " <sup>" + passati.length + "</sup>");
-      if (b.dataset.scheda === "programma" && futuri.length) b.insertAdjacentHTML("beforeend", " <sup>" + futuri.length + "</sup>");
       b.addEventListener("click", function () { attiva(b.dataset.scheda, true); });
       b.addEventListener("keydown", function (ev) {
         var d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
