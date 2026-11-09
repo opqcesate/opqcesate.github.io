@@ -66,8 +66,13 @@ in modo diretto e conciso.
 ## Dati dell'associazione
 - OPQ Associazione Culturale, Via dei Martiri 10, 20031 Cesate (MI)
 - info@opqcesate.it · 347 608 3082 · Instagram @opqcesate
+- Codice fiscale 98008020152.
+- Spazi: ex forno (bar, palchetto, salotto), sala polifunzionale (piano primo, circa 78 m²), giardino urbano
+  (il cortile, a disposizione di OPQ e affittabile), cinema Mignon (da recuperare). Il bar è aperto ai soci.
+- OPQ è un'associazione indipendente: non presentarla sul sito come ARCI né citare ARCI.
 - Tessera associativa 5€ l'anno. Statuto firmato a Cesate il 14 ottobre 2025.
 
-## Ancora da completare (segnaposto gialli)
-Storia di OPQ e dello spazio, testo "chi siamo", nomi del direttivo, codice fiscale,
-foto di coworking e bar.
+## Ancora da completare
+Per ora questi dati sono stati tolti dal sito, senza segnaposto gialli (si reinseriscono quando ci sono):
+nomi del direttivo (sezione nascosta), quali spazi si affittano davvero e le capienze,
+foto della sala polifunzionale. Foto professionali degli spazi da sostituire.
