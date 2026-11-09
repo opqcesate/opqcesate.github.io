@@ -738,3 +738,6 @@ body:has(.nav.aperto) .schede-fascia { z-index: 10; }
   .piede-griglia > .piede-marchio { grid-column: 1 / -1; }
 }
 @media (max-width: 520px) { .piede-griglia { grid-template-columns: repeat(12, minmax(0, 1fr)); } }
+
+/* Scheda senza foto (coworking): il titolo parte in alto, senza il margine sopra */
+.spazi-affitto h3.senza-foto { margin-top: 0; }
