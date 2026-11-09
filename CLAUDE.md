@@ -34,6 +34,7 @@ in modo diretto e conciso.
   anteprima social `assets/og-image.jpg` (1200×630), `site.webmanifest`.
 
 ## Regola di impaginazione (vale per ogni nuovo blocco)
+- Nessuna larghezza massima: a tutto schermo i contenuti arrivano ai margini.
 - Margini esterni `--margine`, griglia a 12 colonne con spazio `--gutter`; le griglie annidate
   usano lo stesso spazio.
 - Tre assi di allineamento: colonne 1, 5 e 9. Etichette sull'asse 1, contenuti sul 5, note sul 9.
@@ -58,7 +59,9 @@ in modo diretto e conciso.
 - Niente pulsante "A+", niente numerini/contatori in apice, niente numerazione delle sezioni.
 - Lo spazio è diviso in due parti: "Il racconto" e, in fondo, "Gli spazi che affittiamo"
   (fondo sabbia). Tariffe e condizioni si concordano privatamente, mai prezzi sul sito.
-- Pagina eventi a schede: In programma / Archivio / Foto.
+- Pagina eventi a schede: In programma / Archivio / Foto. Si apre sempre su In programma.
+- Il link "Area soci" (menu e footer) porta al portale https://portale.opqcesate.it/area-soci.
+- In Chi siamo la sezione "Come siamo organizzati" è nascosta per il momento (commento HTML).
 - Leggibilità alta: molti soci sono anziani (testo base 18 px, contrasti forti).
 
 ## Dati dell'associazione
