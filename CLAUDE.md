@@ -16,18 +16,17 @@ in modo diretto e conciso.
 
 ## Struttura
 - Pagine: `index.html`, `eventi.html`, `spazi.html` (Lo spazio), `chi-siamo.html`
-  (con statuto completo trascritto), `contatti.html`, `area-soci.html`.
+  (con statuto completo trascritto), `contatti.html`.
+  `area-soci.html` è solo un rimando automatico al portale.
 - Testata e piè di pagina sono **ripetuti in ogni pagina**: una modifica al menu o al
-  footer va fatta in tutte e sei.
+  footer va fatta in tutte e cinque.
 - `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 in fondo al file);
   le ultime prevalgono.
 - `assets/js/eventi.js`: **elenco eventi**, l'unico posto da modificare per aggiungere un
   evento. Il sito decide da solo se è "in programma" o "archivio" in base alla data.
 - `assets/js/main.js`: menu mobile, velo della testata (colore della fascia sottostante), video,
   agenda/archivio/filtri, schede della pagina eventi, locandina ingrandita, statuto.
-- `assets/js/area-soci.js`: area soci **dimostrativa** (accetta qualsiasi dato).
-  Per renderla reale serve un elenco soci online e un accesso vero (es. Supabase con
-  link via email); prima va decisa la gestione privacy/GDPR con il direttivo.
+- `assets/js/area-soci.js`: resto della vecchia area soci dimostrativa, non più usato.
 - Immagini già ottimizzate: locandine 1000×1250 in `assets/img/locandine/`, foto eventi e
   spazi max 1800 px, video copertina mp4 H.264 1080 px senza audio.
 - Icone: `favicon.ico` (radice), `assets/logo/` (favicon.svg, icona-192/512, apple-touch-icon),
