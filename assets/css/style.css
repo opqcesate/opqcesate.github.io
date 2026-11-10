@@ -741,3 +741,79 @@ body:has(.nav.aperto) .schede-fascia { z-index: 10; }
 
 /* Scheda senza foto (coworking): il titolo parte in alto, senza il margine sopra */
 .spazi-affitto h3.senza-foto { margin-top: 0; }
+
+/* =========================================================
+   v6 — scala più compatta, tipografia uniforme, pulsanti, cursore, Partecipa
+   ========================================================= */
+html { font-size: 106.25%; } /* testo base 17 px */
+:root {
+  --spazio-sezione: clamp(3rem, 6vw, 5.25rem);
+  --spazio-blocco: clamp(1.5rem, 3vw, 2.25rem);
+  --serif-xl: clamp(2.4rem, 5.4vw, 5.8rem);
+  --serif-l: clamp(1.9rem, 3.1vw, 3.1rem);
+  --serif-m: clamp(1.55rem, 2.2vw, 2.2rem);
+  --serif-s: 1.5rem;
+}
+.pagina-carta { --pagina: var(--carta); }
+
+/* Titoli strutturali (Inter) */
+h1, .intestazione h1 { font-size: clamp(2.9rem, 8.2vw, 8rem); }
+.riga-titolo h2, .capitolo-testa h2 { font-size: clamp(1.25rem, 2vw, 1.8rem); }
+.riga-titolo h2 em, .capitolo-testa h2 em { font-style: normal; }
+.lead { font-size: clamp(1.05rem, 1.3vw, 1.25rem); }
+.copertina-titolo { font-size: clamp(3rem, 7.6vw, 8rem); }
+.copertina-dida p { font-size: 1.05rem; }
+.agenda .giorno { font-size: 2.2rem; }
+
+/* Instrument Serif: quattro grandezze sole */
+.grande-frase, .rassegne h3 { font-size: var(--serif-xl); }
+.ambiente h3, .contatti-lista .valore, .lightbox h3, .blocco-spazio .testo h3 { font-size: var(--serif-l); }
+.agenda .titolo, .avviso p, .statuto summary .titolo-art, .spazi-affitto h3, .tessera-nome, .reparti h3 { font-size: var(--serif-m); }
+.lista-attivita strong, .organi strong, .locandina h3, .scheda-documento dd, .passi h3 { font-size: var(--serif-s); }
+
+/* Etichette e pulsanti: una sola misura */
+.etichetta, .agenda .giorno small, .statuto .num-art { font-size: .76rem; font-weight: 500; letter-spacing: .01em; }
+.passi li::before { font-size: .76rem; font-weight: 500; letter-spacing: .01em; }
+.pulsante, .link-freccia, .indice-pagina a, .filtri button, .apri-menu, .nav a { font-size: .84rem; }
+.schede button { font-size: clamp(.95rem, 1.2vw, 1.05rem); }
+.statuto .testo-articolo p, .statuto .testo-articolo li { font-size: 1rem; }
+
+/* Il nero indica solo ciò che è selezionato: i pulsanti normali sono grigi, al passaggio diventano rossi */
+.pulsante--pieno, .lightbox .chiudi,
+.indice-pagina a[href="#statuto"], .indice-pagina a[href="#affitti"] { background: rgba(18,17,16,.08); color: var(--nero); }
+.pulsante:hover, .link-freccia:hover, .indice-pagina a:hover,
+.indice-pagina a[href="#statuto"]:hover, .indice-pagina a[href="#affitti"]:hover,
+[class*="fondo-"] a.pulsante:hover, [class*="fondo-"] a.link-freccia:hover, [class*="fondo-"] .indice-pagina a:hover,
+.lightbox .chiudi:hover { background: var(--accento); border-color: var(--accento); color: #fff !important; }
+.filtri button[aria-pressed="false"]:hover { background: var(--accento); color: #fff; }
+.copertina .pulsante:hover { background: #fff; color: var(--nero) !important; border-color: #fff; }
+
+/* Cursore: una lettera del logo per pagina (O, P, Q), rossa sui link */
+@media (pointer: fine) {
+  body.cursore-o { cursor: url(../cursore/o.svg) 11 11, auto; }
+  body.cursore-p { cursor: url(../cursore/p.svg) 11 11, auto; }
+  body.cursore-q { cursor: url(../cursore/q.svg) 11 11, auto; }
+  body.cursore-o :is(a, button, summary, select, label, [role="tab"]) { cursor: url(../cursore/o-link.svg) 11 11, pointer; }
+  body.cursore-p :is(a, button, summary, select, label, [role="tab"]) { cursor: url(../cursore/p-link.svg) 11 11, pointer; }
+  body.cursore-q :is(a, button, summary, select, label, [role="tab"]) { cursor: url(../cursore/q-link.svg) 11 11, pointer; }
+}
+
+/* Home: invito a Partecipa */
+.invito { margin: var(--spazio-blocco) 0 0; }
+
+/* Partecipa: reparti e cartellini con i contatti */
+.reparti { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spazio-blocco) var(--gutter); }
+.reparti li { border-top: 1px solid var(--nero); padding-top: .9rem; }
+.reparti h3 { margin: .5rem 0 .5rem; }
+.reparti p { margin: 0; }
+.cartellino { background: var(--carta); border: 2px solid var(--nero); padding: clamp(1rem, 2.5vw, 1.8rem); box-shadow: 6px 6px 0 var(--nero); }
+.cartellino-testa { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 2px solid var(--nero); padding-bottom: .7rem; }
+@media (max-width: 640px) { .reparti { grid-template-columns: 1fr; } }
+.cartellino { max-width: 40rem; }
+.cartellino > p { margin: 1rem 0; }
+.contatti-brevi { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--nero); }
+.contatti-brevi li { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; align-items: baseline; padding: .7rem 0; border-bottom: 1px solid var(--nero); }
+.contatti-brevi a { font-family: var(--serif); font-size: var(--serif-m); line-height: 1.1; text-decoration: none; overflow-wrap: anywhere; }
+.contatti-brevi a:hover { color: var(--accento); }
+@media (max-width: 520px) { .contatti-brevi li { grid-template-columns: 1fr; gap: .2rem; } }
+
