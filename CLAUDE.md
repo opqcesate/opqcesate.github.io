@@ -16,11 +16,12 @@ in modo diretto e conciso.
 
 ## Struttura
 - Pagine: `index.html`, `eventi.html`, `spazi.html` (Lo spazio), `chi-siamo.html`
-  (con statuto completo trascritto), `contatti.html`.
+  (con statuto completo trascritto), `contatti.html`, `partecipa.html` (recruiting: "Porta la tua idea"
+  e "Entra in squadra"; per ora informale: solo istruzioni e contatti, nessun modulo).
   `area-soci.html` è solo un rimando automatico al portale.
 - Testata e piè di pagina sono **ripetuti in ogni pagina**: una modifica al menu o al
-  footer va fatta in tutte e cinque.
-- `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 in fondo al file);
+  footer va fatta in tutte e sei.
+- `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 → v6 in fondo al file);
   le ultime prevalgono.
 - `assets/js/eventi.js`: **elenco eventi**, l'unico posto da modificare per aggiungere un
   evento. Il sito decide da solo se è "in programma" o "archivio" in base alla data.
@@ -61,7 +62,10 @@ in modo diretto e conciso.
 - Pagina eventi a schede: In programma / Archivio / Foto. Si apre sempre su In programma.
 - Il link "Area soci" (menu e footer) porta al portale https://portale.opqcesate.it/area-soci.
 - In Chi siamo la sezione "Come siamo organizzati" è nascosta per il momento (commento HTML).
-- Leggibilità alta: molti soci sono anziani (testo base 18 px, contrasti forti).
+- Leggibilità alta: molti soci sono anziani (testo base 17 px, contrasti forti).
+- Tipografia: Instrument Serif solo in quattro grandezze (`--serif-xl/l/m/s`), etichette e pulsanti in una misura.
+- Il nero pieno indica solo ciò che è selezionato (schede, filtri); i pulsanti sono grigi e al passaggio rossi.
+- Cursore: una lettera del logo per pagina (`cursore-o/p/q` sul `body`, file in `assets/cursore/`), rossa sui link.
 
 ## Dati dell'associazione
 - OPQ Associazione Culturale, Via dei Martiri 10, 20031 Cesate (MI)
