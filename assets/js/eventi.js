@@ -88,6 +88,14 @@ window.EVENTI_OPQ = [
     locandina: "assets/img/locandine/insta-post-40.jpg"
   },
   {
+    data: "2026-04-10", ora: "21:00",
+    titolo: "Flying Bus Live",
+    sottotitolo: "Suburbia, Youngover, The Scurbats",
+    rassegna: "", tipo: "musica",
+    ingresso: "Con tessera soci · 10€ con consumazione",
+    locandina: "assets/img/locandine/insta-post-30-flying-bus.jpg"
+  },
+  {
     data: "2026-03-27", ora: "21:30",
     titolo: "Frappé / Garaggio",
     sottotitolo: "Side A e Side B",
