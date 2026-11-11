@@ -2,7 +2,10 @@
 
 Sito statico dell'associazione culturale OPQ, pubblicato con GitHub Pages
 dal repository `opqcesate/opqcesate.github.io` (branch `main`, cartella radice).
-Indirizzo: https://opqcesate.github.io
+Indirizzo: https://www.opqcesate.it (dominio Aruba collegato a GitHub Pages; opqcesate.github.io rimanda lì).
+DNS su Aruba: A @ → 185.199.108-111.153, CNAME www → opqcesate.github.io. NON toccare i record della posta
+(MX, mx, mail, smtp, pop3, imap, webmail, autoconfig, SPF/DMARC) né portale.* (area soci). Copia dei DNS precedenti
+in Materiale/dns-opqcesate-backup-2026-11-11.txt.
 
 Chi lo cura è Riccardo, vicepresidente dell'associazione. Scrivere in italiano,
 in modo diretto e conciso.
