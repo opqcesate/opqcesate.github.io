@@ -48,7 +48,8 @@ in modo diretto e conciso.
 ## Scelte grafiche già decise (non cambiarle senza chiedere)
 - Testata sovrapposta ai contenuti, con sfocatura e velo a sfumatura progressiva; sulla
   copertina solo la sfocatura sfumata (nessun velo colorato), il video occupa tutto lo schermo.
-- Piè di pagina nero e compatto: logo piccolo, dove, contatti, sito, associazione.
+- Piè di pagina chiaro (colore della pagina, linea nera sopra), compatto e sempre in fondo alla finestra
+  (body flex): logo piccolo, dove, contatti, sito, associazione. Niente fascia nera.
 - Ogni pagina ha un colore che la copre tutta (classi `.pagina-*` sul `body`).
 - Font: **Inter** (strutturale: titoli di pagina 500 molto grandi e stretti, titoli di sezione
   in maiuscolo, menu, etichette, pulsanti) + **Instrument Serif** (carattere distintivo:
@@ -64,11 +65,14 @@ in modo diretto e conciso.
   riproduzione, senza pulsante pausa e senza logo sovrapposto**.
 - Niente pulsante "A+", niente numerini/contatori in apice, niente numerazione delle sezioni.
 - Lo spazio è diviso in due parti: "Il racconto" e, in fondo, "Gli spazi che affittiamo"
-  (fondo sabbia). Tariffe e condizioni si concordano privatamente, mai prezzi sul sito.
+  (fondo lilla). Tariffe e condizioni si concordano privatamente, mai prezzi sul sito.
 - Pagina eventi a schede: In programma / Archivio / Foto. Si apre sempre su In programma.
 - Lo spazio, Chi siamo e Partecipa sono divise in sezioni apribili con il "+" (`details.apribile`, chiuse
   all'apertura). Lo spazio: Com'era, Com'è, La cooperativa (da completare con i materiali di Riccardo),
-  Gli spazi che affittiamo. Un link con #id di una sezione la apre da solo (main.js, apriDaHash).
+  Gli spazi che affittiamo. Ogni sezione apribile ha il suo fondo pastello (`fondo-*`, mai uguale al
+  colore della pagina) e al passaggio è "giocosa": titolo in corsivo serif inclinato, ✶, + che gira,
+  etichetta a timbro rosso (CSS v8). Il sito deve essere divertente da visitare. In Partecipa le due sezioni chiuse sono due "ingressi" affiancati
+  (`.due-ingressi`). Un link con #id di una sezione la apre da solo (main.js, apriDaHash).
 - Cookie: nessun cookie né strumento esterno al caricamento. Font serviti in locale (`assets/font/`,
   `assets/css/font.css`, niente Google Fonts). La mappa di Google in Contatti si carica solo al clic su
   "Mostra la mappa". Per questo non serve il banner: se in futuro si aggiungono statistiche, video
@@ -87,13 +91,22 @@ in modo diretto e conciso.
 - Dai volantini: titoli "manifesto" in Instrument Serif maiuscolo, `.timbro` (parola in riquadro rosso
   leggermente ruotato, es. TESSERA SOCI), stellina ✶ tra data e ora, grassetto per le frasi chiave.
 
+## Google (indicizzazione)
+- Ogni pagina ha titolo e descrizione con le parole cercate (centro culturale, concerti, eventi, affitto spazi
+  per feste) e i comuni vicini (Arese, Garbagnate, Caronno Pertusella, Solaro, Lainate, Saronno). Mai "bar".
+- `sitemap.xml` e `robots.txt` nella radice: una nuova pagina va aggiunta alla sitemap.
+- Dati strutturati: in `index.html` (Organization + EventVenue + WebSite, JSON-LD); gli eventi diventano
+  schema.org Event da soli (main.js, dalla lista di eventi.js).
+- Per "vicino a me" conta soprattutto la scheda Google Business Profile (la crea Riccardo).
+
 ## Dati dell'associazione
 - OPQ Associazione Culturale, Via dei Martiri 10, 20031 Cesate (MI)
 - info@opqcesate.it · 347 608 3082 (anche WhatsApp, wa.me/393476083082) · Instagram @opqcesate
   Non pubblicare numeri personali dei soci. Niente spazio coworking/studio per ora.
 - Codice fiscale 98008020152.
 - Spazi: ex forno (bar, palchetto, salotto), terrazza su strada (è l'ingresso), sala polifunzionale (piano primo, circa 78 m²), giardino urbano
-  (il cortile, a disposizione di OPQ e affittabile), cinema Mignon (da recuperare). Il bar è aperto ai soci.
+  (il cortile, a disposizione di OPQ e affittabile), cinema Mignon (da recuperare), biblioteca (affittabile per riunioni condominiali, lezioni).
+  Storia della Cooperativa Edificatrice (1919) da "Progetto riqualificazione" (2024): in Lo spazio > La cooperativa. Il bar è aperto ai soci.
 - OPQ è un'associazione indipendente: non presentarla sul sito come ARCI né citare ARCI.
 - Tessera associativa 5€ l'anno. Statuto firmato a Cesate il 14 ottobre 2025.
 
