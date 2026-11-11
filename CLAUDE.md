@@ -22,8 +22,9 @@ in modo diretto e conciso.
   (con statuto completo trascritto), `contatti.html`, `partecipa.html` (recruiting: "Porta la tua idea"
   e "Entra in squadra"; per ora informale: solo istruzioni e contatti, nessun modulo).
   `area-soci.html` è solo un rimando automatico al portale.
+- `cookie.html`: informativa cookie e privacy (linkata nel footer di ogni pagina).
 - Testata e piè di pagina sono **ripetuti in ogni pagina**: una modifica al menu o al
-  footer va fatta in tutte e sei.
+  footer va fatta in tutte e sette.
 - `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 → v6 in fondo al file);
   le ultime prevalgono.
 - `assets/js/eventi.js`: **elenco eventi**, l'unico posto da modificare per aggiungere un
@@ -65,6 +66,13 @@ in modo diretto e conciso.
 - Lo spazio è diviso in due parti: "Il racconto" e, in fondo, "Gli spazi che affittiamo"
   (fondo sabbia). Tariffe e condizioni si concordano privatamente, mai prezzi sul sito.
 - Pagina eventi a schede: In programma / Archivio / Foto. Si apre sempre su In programma.
+- Lo spazio, Chi siamo e Partecipa sono divise in sezioni apribili con il "+" (`details.apribile`, chiuse
+  all'apertura). Lo spazio: Com'era, Com'è, La cooperativa (da completare con i materiali di Riccardo),
+  Gli spazi che affittiamo. Un link con #id di una sezione la apre da solo (main.js, apriDaHash).
+- Cookie: nessun cookie né strumento esterno al caricamento. Font serviti in locale (`assets/font/`,
+  `assets/css/font.css`, niente Google Fonts). La mappa di Google in Contatti si carica solo al clic su
+  "Mostra la mappa". Per questo non serve il banner: se in futuro si aggiungono statistiche, video
+  incorporati o simili, serve il banner di consenso e va aggiornata cookie.html.
 - Il link "Area soci" (menu e footer) porta al portale https://portale.opqcesate.it/area-soci.
 - In Chi siamo la sezione "Come siamo organizzati" è nascosta per il momento (commento HTML).
 - Leggibilità alta: molti soci sono anziani (testo base 17 px, contrasti forti).
