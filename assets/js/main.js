@@ -165,6 +165,30 @@
     });
   }
 
+  /* ---------- Sezioni apribili: un link diretto (#sezione) apre la sezione giusta ---------- */
+  function apriDaHash() {
+    var id = decodeURIComponent(location.hash.slice(1)); if (!id) return;
+    var el = document.getElementById(id); if (!el) return;
+    var d = el.closest("details.apribile");
+    if (d && !d.open) { d.open = true; }
+    if (d) setTimeout(function () { el.scrollIntoView({ block: "start" }); }, 30);
+  }
+  apriDaHash();
+  window.addEventListener("hashchange", apriDaHash);
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function () { if (a.getAttribute("href") === location.hash) apriDaHash(); });
+  });
+
+  /* ---------- Mappa di Google: si carica solo su richiesta (niente cookie prima del clic) ---------- */
+  $$("[data-carica-mappa]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var box = b.closest("[data-mappa]");
+      var f = document.createElement("iframe");
+      f.title = "Mappa: OPQ, Via dei Martiri 10, Cesate"; f.src = box.getAttribute("data-mappa");
+      box.innerHTML = ""; box.appendChild(f); box.classList.remove("mappa-consenso");
+    });
+  });
+
   /* Comparsa morbida */
   if ("IntersectionObserver" in window) {
     var oss = new IntersectionObserver(function (voci) {
