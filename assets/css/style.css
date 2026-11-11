@@ -817,3 +817,47 @@ h1, .intestazione h1 { font-size: clamp(2.9rem, 8.2vw, 8rem); }
 .contatti-brevi a:hover { color: var(--accento); }
 @media (max-width: 520px) { .contatti-brevi li { grid-template-columns: 1fr; gap: .2rem; } }
 
+/* Locandine sempre a colori */
+.agenda img, .agenda button:hover img { filter: none; }
+
+/* Home: sezione News (fascia rossa tra copertina e agenda) */
+.novita-corpo { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--spazio-blocco) var(--gutter); align-items: end; }
+.novita-corpo .grande-frase { grid-column: 1 / span 8; }
+.novita-testo { grid-column: 9 / span 4; }
+.novita-testo p { margin: 0 0 1.2rem; }
+.blocco-accento .grande-frase em { color: inherit; }
+.blocco-accento .pulsante { background: #fff; color: var(--accento); }
+.blocco-accento .pulsante:hover { background: var(--nero); border-color: var(--nero); color: #fff !important; }
+@media (max-width: 900px) { .novita-corpo .grande-frase, .novita-testo { grid-column: 1 / -1; } }
+
+/* Dai volantini: titolo manifesto (serif maiuscolo), timbro, grassetti */
+.titolo-manifesto { font-family: var(--serif); font-weight: 400; text-transform: uppercase; font-size: clamp(2.6rem, 7.2vw, 7.4rem); line-height: .86; letter-spacing: -.01em; margin: 0; }
+.novita-corpo .titolo-manifesto { grid-column: 1 / span 8; }
+.timbro { display: inline-block; background: var(--accento); color: #fff; font-family: var(--serif); font-weight: 400; text-transform: uppercase; line-height: 1; padding: .08em .22em .02em; transform: rotate(-1.5deg); }
+.grande-frase .timbro { font-size: .86em; }
+.riga-info .timbro, .capitolo-testa .timbro { font-size: 1.1em; }
+.blocco-accento .timbro { background: var(--carta); color: var(--accento); }
+.novita-testo strong, .capitolo-testa strong, .lead strong, .cartellino strong { font-weight: 600; }
+@media (max-width: 900px) { .novita-corpo .titolo-manifesto { grid-column: 1 / -1; } }
+
+/* Gerarchia: i titoli dei singoli elementi non superano quelli di sezione */
+.rassegne h3 { font-size: var(--serif-l); }
+.ambiente h3 { font-size: var(--serif-m); }
+.riga-titolo .num { grid-column: 1 / -1; }
+.riga-titolo:has(h2) .num { grid-column: 1 / span 4; }
+
+/* "Cerchiamo soci attivi": timbro grande nella News e timbro cliccabile sul video */
+.novita-titoli { grid-column: 1 / span 8; }
+.novita-corpo .novita-titoli .titolo-manifesto { grid-column: auto; }
+.timbro-grande { display: inline-block; font-size: var(--serif-l); margin: 0 0 1.2rem; padding: .12em .3em .04em; transform: rotate(-2deg); }
+.timbro-link { text-decoration: none; font-size: clamp(1.5rem, 2.3vw, 2.2rem); padding: .25em .45em .15em; transform: rotate(-2deg); transition: transform .2s; }
+.timbro-link:hover { color: #fff; transform: rotate(0deg) scale(1.04); }
+.copertina-dida { justify-items: start; }
+@media (max-width: 900px) { .novita-titoli { grid-column: 1 / -1; } }
+
+#news { scroll-margin-top: calc(-1 * (var(--testata) + 1rem)); }
+
+/* Sopra il video: sfocatura sotto la testata con la stessa sfumatura, ma senza velo colorato */
+.con-copertina .testata:not(.piena)::before,
+.con-copertina .testata:not(.piena) .contenitore::before { opacity: 1; }
+.con-copertina .testata:not(.piena)::after { opacity: 0; }
