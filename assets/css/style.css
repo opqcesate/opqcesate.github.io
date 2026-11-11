@@ -876,8 +876,10 @@ h1, .intestazione h1 { font-size: clamp(2.9rem, 8.2vw, 8rem); }
 .apribile-segno::before, .apribile-segno::after { content: ""; position: absolute; left: 50%; top: 50%; width: 1.1rem; height: 2px; background: currentColor; transform: translate(-50%, -50%); transition: transform .25s; }
 .apribile-segno::after { transform: translate(-50%, -50%) rotate(90deg); }
 .apribile[open] > summary .apribile-segno::after { transform: translate(-50%, -50%) rotate(0deg); }
-.apribile > summary:hover h2 { color: var(--accento); }
-.apribile > summary:hover .apribile-segno { background: var(--accento); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .apribile > summary:hover h2 { color: var(--accento); }
+  .apribile > summary:hover .apribile-segno { background: var(--accento); color: #fff; }
+}
 .apribile > summary:focus-visible { outline: 2px solid var(--accento); outline-offset: -4px; }
 .apribile-corpo { padding: var(--spazio-blocco) 0 var(--spazio-sezione); }
 .apribile-corpo .capitolo { border-top: 0; padding-top: 0; }
@@ -960,57 +962,78 @@ body > main { flex: 1 0 auto; }
 }
 
 /* =========================================================
-   v8 — Sezioni apribili più giocose
-   Ogni striscia ha il suo pastello; al passaggio il titolo
-   diventa corsivo, spunta una stellina e il + fa una piroetta.
+   v8 — Sezioni apribili giocose
+   PC: al passaggio del mouse il titolo diventa corsivo, spunta una stellina,
+   il + fa una piroetta e l'etichetta diventa un timbro.
+   Telefono: nessun effetto mentre si scorre; il gioco parte solo al tocco,
+   quando la sezione si apre. Si animano solo transform e opacity (fluido).
    ========================================================= */
 .apribile { position: relative; }
+.apribile > summary { -webkit-tap-highlight-color: transparent; }
 .apribile .grande-frase em { color: inherit; }
-.apribile-testa h2 { transition: color .2s, transform .35s cubic-bezier(.34,1.56,.64,1); transform-origin: left center; }
+.apribile-testa h2 { transform-origin: left center; }
 .apribile-testa h2::after {
   content: "✶"; display: inline-block; margin-left: .35em; color: var(--accento);
   font-family: var(--sans); font-style: normal; opacity: 0; transform: scale(0) rotate(-120deg);
-  transition: opacity .2s, transform .45s cubic-bezier(.34,1.56,.64,1);
 }
-.apribile > summary:hover h2 {
-  font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none;
-  letter-spacing: -.01em; color: var(--nero); transform: rotate(-1.5deg) scale(1.3);
-}
-.apribile > summary:hover h2::after, .apribile[open] > summary h2::after { opacity: 1; transform: scale(1) rotate(0); }
-.apribile-segno { transition: background .2s, color .2s, transform .45s cubic-bezier(.34,1.56,.64,1); }
-.apribile > summary:hover .apribile-segno { background: var(--accento); color: #fff; transform: rotate(180deg) scale(1.15); }
+.apribile-testa .etichetta { justify-self: start; padding: .2rem .4rem; margin-left: -.4rem; }
+.apribile[open] > summary h2::after { opacity: 1; transform: none; }
 .apribile[open] > summary .apribile-segno { background: var(--nero); color: #fff; }
-.apribile > summary:active .apribile-segno { transform: rotate(180deg) scale(.9); }
-/* l'etichetta diventa un piccolo timbro */
-.apribile-testa .etichetta { justify-self: start; transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .2s, color .2s; padding: .2rem .4rem; margin-left: -.4rem; }
-.apribile > summary:hover .etichetta { background: var(--accento); color: #fff; transform: rotate(-3deg); }
 
-/* Partecipa: le due porte si inclinano */
-.due-ingressi:not(:has(.apribile[open])) .apribile > summary:hover { background: transparent; }
-.due-ingressi:not(:has(.apribile[open])) .apribile > summary:hover h2 { transform: rotate(-2.5deg) translateY(-.2rem) scale(1.04); }
-.due-ingressi:not(:has(.apribile[open])) .apribile + .apribile > summary:hover h2 { transform: rotate(2deg) translateY(-.2rem) scale(1.04); }
-
-/* Telefono: niente mouse, il gioco parte al tocco */
-@media (hover: none) {
-  .apribile[open] > summary h2 { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -.01em; transform: rotate(-1.5deg) scale(1.3); }
-  .apribile[open] > summary .etichetta { background: var(--accento); color: #fff; transform: rotate(-3deg); }
-  .apribile[open] > summary .apribile-segno { transform: rotate(180deg); }
-  .apribile > summary:active { background: rgba(18,17,16,.06); }
-  .apribile > summary:active .apribile-segno { background: var(--accento); color: #fff; transform: scale(.85); }
-  .due-ingressi:not(:has(.apribile[open])) .apribile-testa h2 { font-family: var(--serif); font-style: italic; text-transform: none; }
+/* ---- PC: gioco al passaggio del mouse ---- */
+@media (hover: hover) and (pointer: fine) {
+  .apribile-testa h2 { transition: color .2s, transform .35s cubic-bezier(.34,1.56,.64,1); }
+  .apribile-testa h2::after { transition: opacity .2s, transform .45s cubic-bezier(.34,1.56,.64,1); }
+  .apribile-segno { transition: background-color .2s, color .2s, transform .45s cubic-bezier(.34,1.56,.64,1); }
+  .apribile-testa .etichetta { transition: transform .35s cubic-bezier(.34,1.56,.64,1), background-color .2s, color .2s; }
+  .apribile > summary:hover h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none;
+    letter-spacing: -.01em; color: var(--nero); transform: rotate(-1.5deg) scale(1.3);
+  }
+  .apribile > summary:hover h2::after { opacity: 1; transform: none; }
+  .apribile > summary:hover .apribile-segno { background: var(--accento); color: #fff; transform: rotate(180deg) scale(1.15); }
+  .apribile > summary:active .apribile-segno { transform: rotate(180deg) scale(.9); }
+  .apribile > summary:hover .etichetta { background: var(--accento); color: #fff; transform: rotate(-3deg); }
+  /* Partecipa: le due porte si inclinano */
+  .due-ingressi:not(:has(.apribile[open])) .apribile > summary:hover h2 { transform: rotate(-2.5deg) translateY(-.2rem) scale(1.04); }
+  .due-ingressi:not(:has(.apribile[open])) .apribile + .apribile > summary:hover h2 { transform: rotate(2deg) translateY(-.2rem) scale(1.04); }
 }
-/* All'arrivo i "+" salutano uno dopo l'altro */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes saluto { 0%, 100% { transform: rotate(0) scale(1); } 30% { transform: rotate(-25deg) scale(1.15); } 60% { transform: rotate(15deg) scale(1.05); } }
-  .apribile:not([open]) > summary .apribile-segno { animation: saluto .7s cubic-bezier(.34,1.56,.64,1) both; animation-delay: .5s; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* all'arrivo i "+" salutano uno dopo l'altro (solo PC) */
+  @keyframes saluto { 0%, 100% { transform: none; } 30% { transform: rotate(-25deg) scale(1.15); } 60% { transform: rotate(15deg) scale(1.05); } }
+  .apribile:not([open]) > summary .apribile-segno { animation: saluto .7s cubic-bezier(.34,1.56,.64,1) .5s both; }
   .apribile:nth-child(2):not([open]) > summary .apribile-segno { animation-delay: .65s; }
   .apribile:nth-child(3):not([open]) > summary .apribile-segno { animation-delay: .8s; }
   .apribile:nth-child(4):not([open]) > summary .apribile-segno { animation-delay: .95s; }
   .apribile > summary:hover .apribile-segno { animation: none; }
-  @keyframes stellina { from { transform: scale(0) rotate(-180deg); } to { transform: scale(1) rotate(0); } }
-  .apribile[open] > summary h2::after { animation: stellina .6s cubic-bezier(.34,1.56,.64,1); }
+}
+
+/* ---- Telefono: niente effetti mentre si scorre, solo quando si apre ---- */
+@media (hover: none), (pointer: coarse) {
+  .apribile[open] > summary h2 {
+    font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none;
+    letter-spacing: -.01em; transform: rotate(-1.5deg) scale(1.3);
+  }
+  .apribile[open] > summary .etichetta { background: var(--accento); color: #fff; transform: rotate(-3deg); }
+  .apribile[open] > summary .apribile-segno { transform: rotate(180deg); }
+  .due-ingressi:not(:has(.apribile[open])) .apribile-testa h2 { font-family: var(--serif); font-style: italic; text-transform: none; }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference), (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  @keyframes apri-titolo { from { transform: none; } to { transform: rotate(-1.5deg) scale(1.3); } }
+  @keyframes apri-timbro { from { transform: none; } to { transform: rotate(-3deg); } }
+  @keyframes apri-segno { from { transform: none; } to { transform: rotate(180deg); } }
+  @keyframes stellina { from { opacity: 0; transform: scale(0) rotate(-180deg); } to { opacity: 1; transform: none; } }
+  .apribile[open] > summary h2 { animation: apri-titolo .4s cubic-bezier(.34,1.56,.64,1); }
+  .apribile[open] > summary .etichetta { animation: apri-timbro .4s cubic-bezier(.34,1.56,.64,1); }
+  .apribile[open] > summary .apribile-segno { animation: apri-segno .45s cubic-bezier(.34,1.56,.64,1); }
+  .apribile[open] > summary h2::after { animation: stellina .55s cubic-bezier(.34,1.56,.64,1); }
+}
+
+/* ---- Fluidità ---- */
+/* sul telefono un solo strato di sfocatura sotto la testata (il secondo pesa e non si nota) */
+@media (max-width: 900px) {
+  .testata .contenitore::before { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .apribile-testa h2, .apribile-testa h2::after, .apribile-segno, .apribile-testa .etichetta { transition: none; }
-  .apribile > summary:hover h2, .apribile > summary:hover .apribile-segno, .apribile > summary:hover .etichetta { transform: none; }
+  .apribile-testa h2, .apribile-testa h2::after, .apribile-segno, .apribile-testa .etichetta { transition: none !important; animation: none !important; }
 }
