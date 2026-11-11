@@ -17,18 +17,28 @@
   /* ---------- Testata sovrapposta: il velo prende il colore della fascia sottostante ---------- */
   var testata = $(".testata"), copertina = $(".copertina");
   if (testata) {
-    var fasce = $$("main [class*='fondo-']");
+    /* ogni fascia con un fondo suo (pastelli, rosso della News): la testata prende lo stesso colore,
+       così sopra si vede solo la sfocatura */
+    var fasce = $$("main [class*='fondo-'], main .blocco-accento");
     var aggiornaTestata = function () {
       if (copertina) testata.classList.toggle("piena", window.scrollY > copertina.offsetHeight - 80);
       var y = testata.offsetHeight / 2, velo = "";
       fasce.forEach(function (f) {
         var r = f.getBoundingClientRect();
-        if (r.top <= y && r.bottom > y) velo = getComputedStyle(f).backgroundColor;
+        if (r.top <= y && r.bottom > y) velo = f._colore || (f._colore = getComputedStyle(f).backgroundColor);
       });
+      if (velo === veloAttuale) return;
+      veloAttuale = velo;
       if (velo) testata.style.setProperty("--velo", velo); else testata.style.removeProperty("--velo");
     };
-    window.addEventListener("scroll", aggiornaTestata, { passive: true });
-    window.addEventListener("resize", aggiornaTestata);
+    /* al massimo un controllo per fotogramma: lo scorrimento resta fluido */
+    var veloAttuale = null, inAttesa = false;
+    var programma = function () {
+      if (inAttesa) return; inAttesa = true;
+      requestAnimationFrame(function () { inAttesa = false; aggiornaTestata(); });
+    };
+    window.addEventListener("scroll", programma, { passive: true });
+    window.addEventListener("resize", programma);
     aggiornaTestata();
   }
 
