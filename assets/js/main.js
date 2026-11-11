@@ -73,7 +73,7 @@
     return '<li><button type="button" data-evento="' + idDi(e) + '" aria-label="' + esc(e.titolo + ", " + lunga(e)) + '">' +
       '<span class="giorno">' + d.getDate() + '<small>' + MESI_BREVI[d.getMonth()] + " " + d.getFullYear() + '</small></span>' +
       '<span class="titolo">' + esc(e.titolo) + (e.sottotitolo ? '<small>' + esc(e.sottotitolo) + '</small>' : '') + '</span>' +
-      '<span class="rassegna etichetta">' + esc(e.rassegna || etichettaTipo(e.tipo)) + '</span>' +
+      '<span class="rassegna etichetta">' + esc(e.rassegna || e.etichetta || etichettaTipo(e.tipo)) + '</span>' +
       '<img src="' + esc(e.locandina) + '" alt="" loading="lazy">' +
     '</button></li>';
   }
@@ -81,7 +81,7 @@
   function schedaLocandina(e) {
     return '<li class="locandina"><button type="button" data-evento="' + idDi(e) + '">' +
       '<img src="' + esc(e.locandina) + '" alt="Locandina: ' + esc(e.titolo) + '" loading="lazy">' +
-      '<span class="meta"><span class="etichetta">' + breve(e) + '</span><span class="etichetta grigio">' + esc(e.rassegna || etichettaTipo(e.tipo)) + '</span></span>' +
+      '<span class="meta"><span class="etichetta">' + breve(e) + '</span><span class="etichetta grigio">' + esc(e.rassegna || e.etichetta || etichettaTipo(e.tipo)) + '</span></span>' +
       '<h3>' + esc(e.titolo) + '</h3>' +
     '</button></li>';
   }
@@ -118,10 +118,10 @@
     if (!b || !dialogo) return;
     var e = registro[+b.dataset.evento];
     $("img", dialogo).src = e.locandina; $("img", dialogo).alt = "Locandina: " + e.titolo;
-    $(".l-data", dialogo).textContent = lunga(e);
+    $(".l-data", dialogo).textContent = lunga(e).replace(", ore ", " ✶ ore ");
     $("h3", dialogo).textContent = e.titolo;
-    var info = [e.sottotitolo, e.rassegna ? "Rassegna " + e.rassegna : "", e.ingresso].filter(Boolean);
-    $(".l-info", dialogo).innerHTML = info.map(function (t) { return '<p class="riga-info">' + esc(t) + '</p>'; }).join("");
+    var info = [e.sottotitolo, e.rassegna ? "Rassegna " + e.rassegna : (e.etichetta || ""), e.ingresso].filter(Boolean);
+    $(".l-info", dialogo).innerHTML = info.map(function (t) { return '<p class="riga-info">' + esc(t).replace(/tessera soci/i, function (m) { return '<span class="timbro">' + m + '</span>'; }) + '</p>'; }).join("");
     dialogo.showModal();
   });
   if (dialogo) {

@@ -17,12 +17,31 @@
    - sottotitolo: (facoltativo) ospite, tema, ecc.
    - rassegna:   "Giradischi", "GiraJam", "Ci dici la tua?",
                  "Sorsi di cultura" oppure "" se non fa parte di una rassegna
-   - tipo:       "musica" | "incontri" | "feste"  (serve per i filtri)
+   - tipo:       "musica" | "incontri" | "feste"  (serve per i filtri;
+                 "feste" comprende anche teatro e spettacoli)
+   - etichetta:  (facoltativo) parola mostrata al posto del tipo,
+                 es. "Teatro"
    - ingresso:   testo libero
    - locandina:  percorso dell'immagine
    ========================================================= */
 
 window.EVENTI_OPQ = [
+  {
+    data: "2026-11-29", ora: "17:00",
+    titolo: "1522 – per non perderne più nessuna",
+    sottotitolo: "I Guitti e cantasorie. Cinque personaggi rivivono il dramma di Giada, vittima di femminicidio",
+    rassegna: "", tipo: "feste", etichetta: "Teatro",
+    ingresso: "Ingresso gratuito con tessera soci OPQ (5€)",
+    locandina: "assets/img/locandine/1522.jpg"
+  },
+  {
+    data: "2026-11-07", ora: "21:00",
+    titolo: "Velvetnojazz Trio",
+    sottotitolo: "Dove il folk incontra il jazz",
+    rassegna: "Giradischi", tipo: "musica",
+    ingresso: "Con tessera soci · 10€ + consumazione",
+    locandina: "assets/img/locandine/giradischi-velvetnojazz.jpg"
+  },
   {
     data: "2026-10-25", ora: "16:00",
     titolo: "Sorsi di cultura",
@@ -59,7 +78,7 @@ window.EVENTI_OPQ = [
     data: "2026-06-13", ora: "21:00",
     titolo: "Il varietà dello struzzo",
     sottotitolo: "Cabaret, teatro e laboratorio artistico dal vivo",
-    rassegna: "", tipo: "feste",
+    rassegna: "", tipo: "feste", etichetta: "Teatro",
     ingresso: "Con tessera soci · 10€ + consumazione",
     locandina: "assets/img/locandine/insta-post-50.jpg"
   },
