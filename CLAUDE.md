@@ -24,7 +24,7 @@ in modo diretto e conciso.
 - `assets/css/style.css`: grafica. Le regole sono a strati (v2 → v3 → v4 → v5 → v6 in fondo al file);
   le ultime prevalgono.
 - `assets/js/eventi.js`: **elenco eventi**, l'unico posto da modificare per aggiungere un
-  evento. Il sito decide da solo se è "in programma" o "archivio" in base alla data.
+  evento (campo facoltativo `etichetta`, es. "Teatro"). Il sito decide da solo se è "in programma" o "archivio" in base alla data.
 - `assets/js/main.js`: menu mobile, velo della testata (colore della fascia sottostante), video,
   agenda/archivio/filtri, schede della pagina eventi, locandina ingrandita, statuto.
 - `assets/js/area-soci.js`: resto della vecchia area soci dimostrativa, non più usato.
@@ -43,7 +43,7 @@ in modo diretto e conciso.
 
 ## Scelte grafiche già decise (non cambiarle senza chiedere)
 - Testata sovrapposta ai contenuti, con sfocatura e velo a sfumatura progressiva; sulla
-  copertina nessun velo, il video occupa tutto lo schermo.
+  copertina solo la sfocatura sfumata (nessun velo colorato), il video occupa tutto lo schermo.
 - Piè di pagina nero e compatto: logo piccolo, dove, contatti, sito, associazione.
 - Ogni pagina ha un colore che la copre tutta (classi `.pagina-*` sul `body`).
 - Font: **Inter** (strutturale: titoli di pagina 500 molto grandi e stretti, titoli di sezione
@@ -54,6 +54,8 @@ in modo diretto e conciso.
 - Colori: carta `#f3f0e8`, nero `#121110`, accento rosso OPQ `#e4502a`, e fondi pastello
   per sezione presi dalle locandine: rosa `#f8cdbc`, lilla `#d9cae7`, azzurro `#bfd7e2`,
   salvia `#c3dccb`, sabbia `#f2e0ad` (classi `.fondo-*`).
+- Home: subito sotto la copertina la fascia rossa "News" (ora: timbro grande "Cerchiamo soci attivi" +
+  "Costruiamo OPQ insieme" → partecipa.html#squadra). Sul video un timbro cliccabile porta alla News (#news).
 - Copertina home: due video a tutto schermo che si alternano, scuriti, **sempre in
   riproduzione, senza pulsante pausa e senza logo sovrapposto**.
 - Niente pulsante "A+", niente numerini/contatori in apice, niente numerazione delle sezioni.
@@ -64,14 +66,22 @@ in modo diretto e conciso.
 - In Chi siamo la sezione "Come siamo organizzati" è nascosta per il momento (commento HTML).
 - Leggibilità alta: molti soci sono anziani (testo base 17 px, contrasti forti).
 - Tipografia: Instrument Serif solo in quattro grandezze (`--serif-xl/l/m/s`), etichette e pulsanti in una misura.
+- Gerarchia di lettura: etichetta (piccola, maiuscolo) → titolo di sezione (Inter maiuscolo) → frase grande (serif).
+  I titoli degli elementi interni (ambienti, rassegne, reparti) non superano `--serif-l`; niente etichetta che ripeta il titolo.
 - Il nero pieno indica solo ciò che è selezionato (schede, filtri); i pulsanti sono grigi e al passaggio rossi.
 - Cursore: una lettera del logo per pagina (`cursore-o/p/q` sul `body`, file in `assets/cursore/`), rossa sui link.
+- Icona del sito (favicon, Google, telefono): la O con la stella, rossa `#e4502a` su bianco, senza contorni
+  (`assets/logo/favicon.svg` è la fonte; da lì `favicon.ico`, `icona-192/512`, `apple-touch-icon`).
+- Locandine sempre a colori (nessun filtro grigio).
+- Dai volantini: titoli "manifesto" in Instrument Serif maiuscolo, `.timbro` (parola in riquadro rosso
+  leggermente ruotato, es. TESSERA SOCI), stellina ✶ tra data e ora, grassetto per le frasi chiave.
 
 ## Dati dell'associazione
 - OPQ Associazione Culturale, Via dei Martiri 10, 20031 Cesate (MI)
-- info@opqcesate.it · 347 608 3082 · Instagram @opqcesate
+- info@opqcesate.it · 347 608 3082 (anche WhatsApp, wa.me/393476083082) · Instagram @opqcesate
+  Non pubblicare numeri personali dei soci. Niente spazio coworking/studio per ora.
 - Codice fiscale 98008020152.
-- Spazi: ex forno (bar, palchetto, salotto), sala polifunzionale (piano primo, circa 78 m²), giardino urbano
+- Spazi: ex forno (bar, palchetto, salotto), terrazza su strada (è l'ingresso), sala polifunzionale (piano primo, circa 78 m²), giardino urbano
   (il cortile, a disposizione di OPQ e affittabile), cinema Mignon (da recuperare). Il bar è aperto ai soci.
 - OPQ è un'associazione indipendente: non presentarla sul sito come ARCI né citare ARCI.
 - Tessera associativa 5€ l'anno. Statuto firmato a Cesate il 14 ottobre 2025.
