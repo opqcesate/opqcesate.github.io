@@ -189,6 +189,31 @@
     });
   });
 
+  /* ---------- Eventi per Google (schema.org Event), dalla stessa lista di eventi.js ---------- */
+  (function () {
+    var lista = window.EVENTI_OPQ; if (!lista || !lista.length) return;
+    var SITO = "https://www.opqcesate.it/";
+    function fuso(d) { /* ora legale italiana: dall'ultima domenica di marzo all'ultima di ottobre */
+      var y = +d.slice(0, 4), m = +d.slice(5, 7), g = +d.slice(8, 10);
+      function ultimaDom(mese) { var x = new Date(Date.UTC(y, mese, 0)); return x.getUTCDate() - x.getUTCDay(); }
+      var estate = (m > 3 && m < 10) || (m === 3 && g >= ultimaDom(3)) || (m === 10 && g < ultimaDom(10));
+      return estate ? "+02:00" : "+01:00";
+    }
+    var luogo = { "@type": "Place", "name": "OPQ Opificio Culturale", "address": { "@type": "PostalAddress",
+      "streetAddress": "Via dei Martiri 10", "postalCode": "20031", "addressLocality": "Cesate", "addressRegion": "MI", "addressCountry": "IT" } };
+    var dati = lista.map(function (e) {
+      var ev = { "@type": "Event", "name": e.titolo, "startDate": e.data + "T" + (e.ora || "21:00") + ":00" + fuso(e.data),
+        "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": luogo, "organizer": { "@type": "Organization", "name": "OPQ Opificio Culturale", "url": SITO },
+        "description": [e.sottotitolo, e.rassegna, e.ingresso].filter(Boolean).join(". ") };
+      if (e.locandina) ev.image = [SITO + e.locandina.replace(/^\//, "")];
+      return ev;
+    });
+    var tag = document.createElement("script"); tag.type = "application/ld+json";
+    tag.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": dati });
+    document.head.appendChild(tag);
+  })();
+
   /* Comparsa morbida */
   if ("IntersectionObserver" in window) {
     var oss = new IntersectionObserver(function (voci) {
