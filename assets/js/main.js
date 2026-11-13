@@ -44,21 +44,39 @@
 
   /* ---------- Video di copertina: sempre in riproduzione, si alternano in dissolvenza ---------- */
   var video = $$(".copertina video");
-  function suona(v) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  function suona(v) {
+    v.muted = true; v.defaultMuted = true; v.setAttribute("muted", ""); v.playsInline = true;
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  }
   if (video.length) {
     video[0].classList.add("attivo");
+    var attivo = function () { return video.filter(function (v) { return v.classList.contains("attivo"); })[0] || video[0]; };
+    /* Riavvia il video attivo se è fermo. Chrome sul telefono a volte rifiuta il primo play()
+       (pagina pre-caricata, video non ancora pronto, pagina ripresa con "indietro"):
+       per questo si riprova a ogni occasione utile, finché non parte. */
+    var avvia = function () {
+      if (document.hidden) return;
+      var v = attivo();
+      if (v.paused && !v.ended) suona(v);
+    };
     video.forEach(function (v, i) {
       v.addEventListener("ended", function () {
         var prossimo = video[(i + 1) % video.length];
         prossimo.currentTime = 0; suona(prossimo);
         if (prossimo !== v) { prossimo.classList.add("attivo"); v.classList.remove("attivo"); }
       });
+      ["loadedmetadata", "loadeddata", "canplay"].forEach(function (ev) { v.addEventListener(ev, avvia); });
     });
-    suona(video[0]);
-    // se il browser mette in pausa il video (es. scheda in background), riparte al ritorno
-    document.addEventListener("visibilitychange", function () {
-      if (!document.hidden) video.forEach(function (v) { if (v.classList.contains("attivo")) suona(v); });
+    avvia();
+    document.addEventListener("visibilitychange", avvia);
+    document.addEventListener("prerenderingchange", avvia);
+    window.addEventListener("pageshow", avvia);
+    window.addEventListener("load", avvia);
+    ["touchstart", "pointerdown", "scroll", "keydown"].forEach(function (ev) {
+      window.addEventListener(ev, avvia, { passive: true });
     });
+    /* controllo di sicurezza leggero: ogni 2 secondi, se il video attivo è fermo, riparte */
+    setInterval(avvia, 2000);
   }
 
   /* ---------- Eventi ---------- */
