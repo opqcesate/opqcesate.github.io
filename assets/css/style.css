@@ -1037,3 +1037,9 @@ body > main { flex: 1 0 auto; }
 @media (prefers-reduced-motion: reduce) {
   .apribile-testa h2, .apribile-testa h2::after, .apribile-segno, .apribile-testa .etichetta { transition: none !important; animation: none !important; }
 }
+
+/* La cooperativa: capitoli della storia */
+#cooperativa .capitolo-testa .etichetta { display: block; margin-bottom: .5rem; color: var(--accento); }
+#cooperativa .capitolo-corpo > .etichetta { display: block; margin-bottom: .8rem; }
+.fonti { margin: var(--spazio-blocco) 0 0 var(--terzo); font-size: .85rem; color: rgba(18,17,16,.7); max-width: 60rem; }
+@media (max-width: 900px) { .fonti { margin-left: 0; } }
