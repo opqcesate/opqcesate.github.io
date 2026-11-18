@@ -27,6 +27,14 @@
 
 window.EVENTI_OPQ = [
   {
+    data: "2026-11-27", ora: "21:00",
+    titolo: "Crewditè",
+    sottotitolo: "Stand up comedy servita cruda. Il collettivo Crewdité sale sul palchetto di OPQ",
+    rassegna: "", tipo: "feste", etichetta: "Comedy",
+    ingresso: "Ingresso gratuito con tessera soci OPQ (5€)",
+    locandina: "assets/img/locandine/crewdite.jpg"
+  },
+  {
     data: "2026-11-29", ora: "17:00",
     titolo: "1522 – per non perderne più nessuna",
     sottotitolo: "I Guitti e cantasorie. Cinque personaggi rivivono il dramma di Giada, vittima di femminicidio",
